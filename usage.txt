@@ -1,0 +1,9 @@
+taskkill /IM AirportRfid.exe /F
+taskkill /IM tfPhaseServer.exe /F
+net localgroup administrators ssh /add
+put F:\update\AirportRfid.exe D:\AirportRfid\AirportRfid.exe
+put F:\update\DTK.Lib.dll D:\AirportRfid\DTK.Lib.dll
+put F:\update\tfPhaseServer.exe D:\tfPhaseServer\tfPhaseServer.exe
+send_config F:\config_guoji
+shutdown -r -t 1
+put D:\AirportRfid\AirportRfid.exe D:\AirportRfid\AirportRfid.exe

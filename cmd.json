@@ -1,0 +1,9 @@
+{
+    "1": "taskkill /IM AirportRfid.exe /F",
+    "2": "taskkill /IM tfPhaseServer.exe /F",
+    "3": "put D:/AirportRfid/AirportRfid.exe D:/AirportRfid/AirportRfid.exe",
+    "4": "put D:/tfPhaseServer.exe D:/tfPhaseServer/tfPhaseServer.exe",
+    "5": "send_config F:/config_guoji",
+    "6": "shutdown -r -t 10",
+    "q": "quit"
+}
