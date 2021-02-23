@@ -1,7 +1,6 @@
 """核心代码"""
 import json
 
-import settings
 import paramiko
 import threading
 import os
@@ -95,14 +94,21 @@ class REMOTE_HOST(object):
 
 
 def show_host_list():
+    # read param
+    with open('target.json') as json_file:
+        target = json.load(json_file)
+
     """通过选择分组显示主机名与IP"""
-    for index, key in enumerate(settings.msg_dic):
-        print(index + 1, key, len(settings.msg_dic[key]))
+    for index, key in enumerate(target):
+        print(f'[{index}] {key}{len(target[key])}')
     while True:
-        choose_host_list = input(">>>(eg:group1)").strip()
-        host_dic = settings.msg_dic.get(choose_host_list)
+        choose_index = int(input(">>>(index)").strip())
+        host_dic = []
+        for index, key in enumerate(target):
+            if choose_index == index:
+                host_dic = target[key]
+                break
         if host_dic:
-            #print(host_dic)
             for key in host_dic:
                 print(key, host_dic[key]["IP"])
             return host_dic
@@ -121,7 +127,7 @@ def show_cmd_list():
     while True:
         cmd = input(">>>(eg:1)").strip()
         try:
-            host_dic = settings.cmd_dic[cmd]
+            host_dic = cfg[cmd]
             if host_dic:
                 print('cmd: ' + host_dic)
                 return host_dic
