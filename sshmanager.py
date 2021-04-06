@@ -92,6 +92,40 @@ class REMOTE_HOST(object):
         except Exception as e:
             print(self.host + ':' + str(e))
 
+    def send_files(self):
+        """ send_files local_dir remote_dir"""
+        try:
+            local_dir = self.cmd.split()[1]
+            remote_dir = self.cmd.split()[2]
+            transport = paramiko.Transport((self.host, self.port))
+            transport.connect(username=self.username, password=self.password)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            files = os.listdir(local_dir)
+            for filename in files:
+                sftp.put(os.path.join(local_dir, filename), os.path.join(remote_dir, filename))
+                print(self.host + ':' + "send " + filename)
+            transport.close()
+
+        except Exception as e:
+            print(self.host + ':' + str(e))
+
+    def get_files(self):
+        """ get_files remote_dir local_dir """
+        try:
+            local_dir = self.cmd.split()[2]
+            remote_dir = self.cmd.split()[1]
+            transport = paramiko.Transport((self.host, self.port))
+            transport.connect(username=self.username, password=self.password)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            files = os.listdir(remote_dir)
+            for filename in files:
+                sftp.get(os.path.join(remote_dir, filename), os.path.join(local_dir, filename))
+                print(self.host + ':' + "get " + filename)
+            transport.close()
+
+        except Exception as e:
+            print(self.host + ':' + str(e))
+
 
 def show_host_list():
     # read param
@@ -162,6 +196,7 @@ def interactive(choose_host_list):
 
 
 def run():
+    print('ssh manager version:1.0.1')
     choose_host_list = show_host_list()
     interactive(choose_host_list)
 
